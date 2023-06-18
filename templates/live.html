@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block app_content %}
+    <a href="{{ url_for('live') }}" class="btn btn-info refresh">Создать новое поколение</a>
+
+    <a href="{{ url_for('index') }}" class="btn btn-warning home">Домашняя страница</a>
+
+    <div class="counter">{{ game.counter }}</div>
+
+    <table class="world">
+    {% for i in range(25) %}
+        <tr>
+            {% for j in range(25) %}
+                {% if game.world[i][j] == 1 %}
+                    <td class="cell living-cell"></td>
+                {% elif game.world[i][j] == 0 and game.old_world[i][j] == 1 %}
+                    <td class="cell dead-cell"></td>
+                {% else %}
+                    <td class="cell"></td>
+                {% endif %}
+            {% endfor %}
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script>
+        setInterval(() => window.location.reload(), 1000);
+    </script>
+{% endblock %}
